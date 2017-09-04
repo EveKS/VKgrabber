@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Вход в приложение";
+}
+
+<section>
+    <div class="container body-content">
+        <div class="row">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <h2 class="row-h2">Вы уже авторизованы.</h2>
+            }
+            else
+            {
+                <h2 class="row-h2">Вход в приложение.</h2>
+                <vc:account-login></vc:account-login>
+            }
+        </div>
+    </div>
+</section>

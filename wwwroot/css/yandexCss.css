@@ -1,0 +1,28 @@
+﻿/*.ya-share2__container * {
+    line-height: 30px !important;
+}*/
+
+.ya-share2__container a {
+    float: left !important;
+    margin-bottom: 5px !important;
+    /*font-size: 18px !important;*/
+}
+
+/*.ya-share2__badge {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.ya-share2__container_size_m .ya-share2__icon {
+    width: 30px !important;
+    height: 30px !important;
+}
+
+.ya-share2__container_size_m .ya-share2__popup_direction_bottom {
+    top: 30px !important;
+}
+
+.ya-share2__container_size_m .ya-share2__icon_more:before {
+    font-size: 14px !important;
+    line-height: 27px !important;
+}*/

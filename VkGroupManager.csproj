@@ -1,0 +1,81 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageTargetFallback>$(PackageTargetFallback);portable-net45+win8+wp8+wpa81;</PackageTargetFallback>
+    <UserSecretsId>cb1bb8f3-dfb4-4248-bc3a-850a465c3555</UserSecretsId>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot/images\Elia-Locardi-Travel-Photography-The-Future-Is-Now-Dubai-UAE-2048-WM.jpg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Properties\PublishProfiles\CustomProfile.pubxml" />
+    <None Remove="Properties\PublishProfiles\vkmanager - Web Deploy.pubxml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="wwwroot\css\error.css" />
+    <Content Include="wwwroot\css\fonts.css" />
+    <Content Include="wwwroot\css\optionView.css" />
+    <Content Include="wwwroot\css\submitMessageCss.css" />
+    <Content Include="wwwroot\css\yandexCss.css" />
+    <Content Include="wwwroot\fonts\Bellefair-Regular.ttf" />
+    <Content Include="wwwroot\fonts\Pacifico-Regular.ttf" />
+    <Content Include="wwwroot\fonts\RobotoSlab-Bold.ttf" />
+    <Content Include="wwwroot\fonts\RobotoSlab-Light.ttf" />
+    <Content Include="wwwroot\fonts\RobotoSlab-Regular.ttf" />
+    <Content Include="wwwroot\fonts\RobotoSlab-Thin.ttf" />
+    <Content Include="wwwroot\js\optionVkJs.js" />
+    <Content Include="wwwroot\js\submitMessageJs.js" />
+    <Content Include="wwwroot\lib\fontawesome\fontawesome.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.Security.OAuth.Vkontakte" Version="1.0.1" />
+    <PackageReference Include="CsQuery.NETStandard" Version="1.3.6.1" />
+    <PackageReference Include="MailKit" Version="1.16.2" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.MicrosoftAccount" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OAuth" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="1.1.3" />
+    <PackageReference Include="Microsoft.AspNetCore.ResponseCompression" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Rewrite" Version="1.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="1.1.2" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="1.1.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="1.1.2" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="1.1.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="1.1.2" />
+    <PackageReference Include="MimeKit" Version="1.16.2" />
+  </ItemGroup>
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="Properties\PublishProfiles\" />
+    <Folder Include="ViewModels\Role\" />
+    <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\files\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\lib\fontawesome\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\robots.txt" />
+  </ItemGroup>
+
+</Project>

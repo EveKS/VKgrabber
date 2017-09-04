@@ -1,0 +1,205 @@
+﻿pre {
+    overflow: auto;
+    word-wrap: break-word;
+    white-space: pre-line;
+    font-size: 18px;
+}
+
+.message-container {
+    background: rgba(238, 238, 238, 0.50);
+    border-radius: 5px;
+    border: 0.3px solid #bababa;
+    padding: 15px;
+    margin: 7px 0;
+}
+
+.form-textarea {
+    font-size: 18px;
+}
+
+.form-group input.fancy-checkbox[type="checkbox"] {
+    display: none;
+}
+
+.form-group input[type="checkbox"] + .btn-group > label {
+    height: 33px;
+    width: 43px;
+    text-align: center;
+}
+
+    .form-group input[type="checkbox"] + .btn-group > label:first-child span:first-child {
+        display: none;
+    }
+
+    .form-group input[type="checkbox"] + .btn-group > label:first-child span:last-child {
+        display: inline-block;
+    }
+
+.form-group input[type="checkbox"]:checked + .btn-group > label:first-child span:first-child {
+    display: inline-block;
+}
+
+.form-group input[type="checkbox"]:checked + .btn-group > label:first-child span:last-child {
+    display: none;
+}
+
+/* OPTION SECTION */
+.vkmessage-groupoution {
+    font-size: 50px;
+    color: #808080;
+    height: 106px;
+}
+
+    .vkmessage-groupoution i {
+        line-height: 50px;
+        float: left;
+        margin: 5px;
+    }
+
+    .vkmessage-groupoution .fa-plus-square {
+        color: #2a5885
+    }
+
+    .vkmessage-groupoution .fa-instagram {
+        /*color: #337ab7;*/
+        line-height: 50px;
+        float: left;
+        margin: 5px;
+    }
+
+        .vkmessage-groupoution .fa-instagram:hover,
+        .vkmessage-groupoution .fa-plus-square:hover {
+            color: #444;
+        }
+
+
+    .vkmessage-groupoution .btn-vk-image {
+        float: right;
+        padding: 0;
+    }
+
+        .vkmessage-groupoution .btn-vk-image img {
+            height: 75px;
+        }
+
+.rainbow {
+    background-image: -webkit-gradient( linear, left top, right bottom, color-stop(0, #6050c6), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #00d0d0), color-stop(0.6, #fecf6c),color-stop(0.75, #dc2e78), color-stop(0.9, #fecf6c), color-stop(1, #f22) );
+    background-image: gradient( linear, left top, right bottom, color-stop(0, #6050c6), color-stop(0.15, #f2f), color-stop(0.3, #22f), color-stop(0.45, #00d0d0), color-stop(0.6, #fecf6c),color-stop(0.75, #dc2e78), color-stop(0.9,#fecf6c), color-stop(1, #f22) );
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+/* LEFT MENU */
+#left-menu {
+    z-index: 10;
+    position: fixed;
+    top: 162px;
+    display: inline-block;
+    width: 55px;
+}
+
+    #left-menu .tooltip-menu-get #get-messages,
+    #left-menu .tooltip-menu-next #next-messages,
+    #left-menu .tooltip-menu-send #send-messages {
+        position: relative;
+        transition: 0.3s;
+        padding: 15px 10px;
+        text-decoration: none;
+        font-size: 20px;
+        color: white;
+        border-radius: 0 5px 5px 0;
+        z-index: 1101;
+    }
+
+        #left-menu .tooltip-menu-get #get-messages i,
+        #left-menu .tooltip-menu-next #next-messages i,
+        #left-menu .tooltip-menu-send #send-messages i {
+            width: 20px;
+        }
+
+#send-messages {
+    background-color: #4CAF50;
+}
+
+#next-messages {
+    background-color: #555;
+}
+
+#get-messages {
+    background-color: #f44336;
+}
+
+.tooltip-menu-send {
+    position: relative;
+    top: 22px;
+}
+
+.tooltip-menu-next {
+    position: relative;
+    top: 44px;
+}
+
+.tooltip-menu-get {
+    position: relative;
+    top: 0px;
+}
+
+#get-messages:hover,
+#next-messages:hover,
+#send-messages:hover {
+    cursor: pointer;
+    padding-left: 20px !important;
+}
+
+.is-disabled {
+    background-color: rgba(181, 181, 181, 0.95) !important;
+}
+
+.selected-number {
+    font-size: 45px;
+    color: #4CAF50;
+}
+
+    .selected-number span {
+        position: fixed;
+        bottom: 15px;
+        left: 15px;
+        z-index: 1111;
+        border-radius: 50%;
+    }
+
+/* IMAGE WALL */
+.thumb {
+    background-color: #ffffff;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
+    margin-top: 30px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    width: 100%;
+}
+
+.thumb-img {
+    border-radius: 2px;
+    overflow: hidden;
+    width: 100%;
+    vertical-align: middle;
+    border: 0;
+}
+
+.img-container-f {
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+    overflow: hidden;
+    min-height: 0px !important;
+}
+
+.iframe-youtube {
+    width: 100%;
+    height: 281px;
+}

@@ -1,0 +1,110 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model ExternalLoginConfirmationViewModel
+@inject SignInManager<User> SignInManager
+
+@{
+    var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+}
+
+<div class="modal fade" id="modal-account-login" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="h3-login">Войти или <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Зарегистрироваться</a></h3>
+                @if (loginProviders.Count > 0)
+                {
+                    var facebook = loginProviders.FirstOrDefault(pr => pr.AuthenticationScheme == "Facebook");
+                    var twitter = loginProviders.FirstOrDefault(pr => pr.AuthenticationScheme == "Twitter");
+                    var google = loginProviders.FirstOrDefault(pr => pr.AuthenticationScheme == "Google");
+
+                    <div class="row social-buttons">
+                        <form asp-controller="Account"
+                              asp-action="ExternalLogin"
+                              method="post" class="form-horizontal">
+                            <div class="col-xs-4">
+                                <button type="submit"
+                                        class="btn btn-lg btn-block btn-facebook"
+                                        name="provider"
+                                        value="@facebook.AuthenticationScheme"
+                                        title="Войти, используя ваш @facebook.DisplayName аккаунт">
+                                    <i class="fa fa-facebook visible-xs"></i><span class="hidden-xs">Facebook</span>
+                                </button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button type="submit"
+                                        class="btn btn-lg btn-block btn-twitter"
+                                        name="provider"
+                                        value="@twitter.AuthenticationScheme"
+                                        title="Войти, используя ваш @twitter.DisplayName аккаунт">
+                                    <i class="fa fa-twitter visible-xs"></i><span class="hidden-xs">Twitter</span>
+                                </button>
+                            </div>
+                            <div class="col-xs-4">
+                                <button type="submit"
+                                        class="btn btn-lg btn-block btn-google"
+                                        name="provider"
+                                        value="@google.AuthenticationScheme"
+                                        title="Войти, используя ваш @google.DisplayName аккаунт">
+                                    <i class="fa fa-google-plus visible-xs"></i><span class="hidden-xs">Google+</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row login-or">
+                        <div class="col-xs-12">
+                            <hr class="login-hr"><span class="login-spanor">или</span>
+                        </div>
+                    </div>
+                }
+                <div class="row">
+                    <div class="col-xs-12">
+                        <form method="post" asp-controller="Account" asp-action="Login"
+                              class="form-horizontal">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input class="form-control" asp-for="Email" placeholder="Email">
+                            </div>
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-lock"></i>
+                                </span>
+                                <input class="form-control" asp-for="Password" placeholder="Пароль">
+                            </div>
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                            <div class="form-group">
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        <label asp-for="RememberMe">
+                                            <input asp-for="RememberMe" />
+                                            @Html.DisplayNameFor(m => m.RememberMe)
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <input type="submit" class="btn-pd btn btn-danger btn-block" value="Войти" />
+                        </form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <p>
+                            <a asp-controller="Account" asp-action="Login">Использовать другой способ авторизации?</a>
+                        </p>
+                        <p>
+                            <a asp-controller="Account" asp-action="ForgotPassword">Забыли пароль?</a>
+                        </p>
+                    </div>
+                </div>
+                <div>
+                    <button type="button" class="btn-modal-login btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

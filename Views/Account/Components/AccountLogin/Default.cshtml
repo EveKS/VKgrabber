@@ -1,0 +1,46 @@
+﻿@model LoginViewModel
+
+<div class="col-md-8">
+    <form method="post" asp-controller="Account" asp-action="Login"
+          asp-route-returnUrl="@Model.ReturnUrl"
+          class="form-horizontal">
+        <div asp-validation-summary="ModelOnly"></div>
+        <fieldset class="form-group">
+            <hr />
+            <div class="form-group">
+                <label asp-for="Email" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="col-md-2 control-label"></label>
+                <div class="col-md-10">
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <div class="checkbox">
+                        <label asp-for="RememberMe">
+                            <input asp-for="RememberMe" />
+                            @Html.DisplayNameFor(m => m.RememberMe)
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-gray mr_r_15 fl_r" value="Войти" />
+            </div>
+            <p>
+                <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]">Зарегистрироваться как новый пользователь?</a>
+            </p>
+            <p>
+                <a asp-action="ForgotPassword">Забыли пароль?</a>
+            </p>
+        </fieldset>
+    </form>
+</div>
+<vc:external-login></vc:external-login>

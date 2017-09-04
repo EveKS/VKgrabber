@@ -1,0 +1,229 @@
+/*==========  Desktop First Method  ==========*/
+
+/* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+    .gi-content {
+        padding: 15px 5px !important;
+    }
+
+    .gic-info .gic-btn {
+        padding: 0 5px !important;
+    }
+
+    .gi-content h4 {
+        font-size: 1.1em !important;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+    .gi-content {
+        padding: 15px 3px !important;
+    }
+
+    .gic-info .gic-btn {
+        padding: 0 3px !important;
+    }
+
+    .gi-content h4 {
+        display: none;
+    }
+
+    .group-info-container i {
+        font-size: 34px !important;
+        padding: 6px !important;
+    }
+}
+
+/* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+    /*Disable Animation on Mobile Devices*/
+    .animated {
+        /*CSS transitions*/
+        -o-transition-property: none !important;
+        -moz-transition-property: none !important;
+        -webkit-transition-property: none !important;
+        transition-property: none !important;
+        /*CSS transforms*/
+        -o-transform: none !important;
+        -moz-transform: none !important;
+        -ms-transform: none !important;
+        -webkit-transform: none !important;
+        transform: none !important;
+        /*CSS animations*/
+        -webkit-animation: none !important;
+        -moz-animation: none !important;
+        -o-animation: none !important;
+        animation: none !important;
+    }
+
+    #left-menu {
+        top: 198px !important;
+    }
+
+    .vkmessage-groupoution .fa-plus-square {
+        margin-left: 20px;
+    }
+
+    .row-h2 {
+        margin: 15px;
+    }
+
+        .row-h2 + form fieldset,
+        .row-h2 + .col-md-8 form fieldset {
+            margin: 0 15px 15px 5px;
+        }
+
+    /* GROUP INFO */
+    .gi-content {
+        padding: 20px !important;
+    }
+
+    .gic-info .gic-btn {
+        padding: 0 20px !important;
+    }
+
+    .gi-content h4 {
+        display: block;
+        font-size: 1.6em;
+    }
+
+    .group-info-container i {
+        font-size: 46px !important;
+        padding: 6px 12px !important;
+    }
+
+    .caption {
+        top: 10%;
+    }
+
+    .footer-caption {
+        bottom: 0;
+    }
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+}
+
+
+/* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+}
+
+
+/*==========  Mobile First Method  ==========*/
+
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px) {
+}
+
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px) {
+}
+
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px) {
+    .form-img-section {
+        padding: 0 15px 0 0;
+    }
+}
+
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px) {
+}
+
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px) {
+}
+
+/* ATHERTH */
+
+@media only screen and (max-width : 427px) {
+    .gi-content {
+        padding: 15px 5px !important;
+    }
+
+    .gic-info .gic-btn {
+        padding: 0 5px !important;
+    }
+
+    .gi-content h4 {
+        font-size: 1.1em !important;
+    }
+}
+
+@media only screen and (max-width : 513px) {
+    .footer-caption {
+        right: 0;
+    }
+}
+
+@media only screen and (max-width : 367px) {
+    .gi-content {
+        padding: 15px 3px !important;
+    }
+
+    .gic-info .gic-btn {
+        padding: 0 3px !important;
+    }
+
+    .gi-content h4 {
+        display: none;
+    }
+
+    .group-info-container i {
+        font-size: 34px !important;
+        padding: 6px !important;
+    }
+}
+
+@media only screen and (min-width : 1225px) {
+    .footer-caption {
+        right: 7%;
+    }
+}
+
+@media only screen and (min-width : 1500px) {
+    .footer-caption {
+        right: 9%;
+    }
+}
+
+@media only screen and (min-width : 1594px) {
+    .caption {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+}
+
+@media only screen and (min-width : 1720px) {
+    .caption {
+        padding-left: 200px;
+        padding-right: 200px;
+    }
+}
+
+@media only screen and (max-width : 354px) {
+    .head-caption h1 {
+        font-size: 30px;
+    }
+}
+
+@media only screen and (max-height : 475px) {
+    .message-contakt textarea {
+        height: 35px !important;
+    }
+
+    .footer-caption {
+        bottom: 3px;
+    }
+}
+
+@media only screen and (max-height : 335px) {
+    .message-contakt {
+        display: none;
+        visibility: hidden;
+        opacity: 0;
+    }
+}

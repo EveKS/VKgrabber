@@ -1,0 +1,26 @@
+﻿@{
+    var path = Context.Request.Path.Value.ToLower();
+    var isLogin = path.Contains("login") || path.Contains("externallogin")
+        || path.Contains("externallogincallback") || path.Contains("resetpassword")
+        || path.Contains("externalloginconfirmation") || path.Contains("register");
+}
+<ul class="nav navbar-nav navbar-right">
+    <li>
+        <a asp-controller="Account"
+           asp-action="Register">
+            <span class="glyphicon glyphicon-user pr_5"></span>Регистрация
+        </a>
+    </li>
+    @if (!isLogin)
+    {
+        <li>
+            @*<a asp-controller="Account"
+                   asp-action="Login">
+                    <span class="glyphicon glyphicon-log-in come-in pr_5"></span>Войти
+                </a>*@
+            <a class="login-btn" data-toggle="modal" data-target="#modal-account-login">
+                <span class="glyphicon glyphicon-log-in come-in pr_5"></span>Войти
+            </a>
+        </li>
+    }
+</ul>

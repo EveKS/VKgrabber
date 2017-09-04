@@ -1,0 +1,60 @@
+﻿.affix {
+    top: 0;
+    width: 100%;
+}
+
+    .affix + .container-fluid {
+        padding-top: 70px;
+    }
+
+.nav-index {
+    transition: 0.3s;
+    z-index: 1005;
+    border-radius: 0;
+}
+
+i.arrow {
+    border: solid #808080;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    margin-left: 5px;
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.no-wrap-text {
+    white-space: nowrap;
+}
+
+.btn-text-left {
+    text-align: left;
+    color: white;
+    font-size: 1em;
+}
+
+    .btn-text-left:hover {
+        color: #d3d3d3;
+    }
+
+        .btn-text-left:hover i {
+            border-color: #d8d8d8;
+        }
+
+.message-btn-right {
+    float: right;
+}
+
+    .message-btn-right ul {
+        min-width: 114px;
+        margin: 2px 0 0 0;
+        padding: 0;
+    }

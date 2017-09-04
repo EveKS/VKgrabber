@@ -1,0 +1,37 @@
+﻿@*https://api.vk.com/method/getProfiles?uids=401010807&fields=uid,%20first_name,%20last_name,%20sex,%20bdate,%20city,%20country,%20photo_50,%20photo_100,%20photo_200_orig,%20photo_200,%20photo_400_orig,%20photo_max,%20photo_max_orig,%20online,%20lists,%20screen_name,%20has_mobile,%20contacts,%20education,%20universities,%20schools,%20can_post,%20can_see_all_posts,%20can_write_private_message,%20activity,%20last_seen,%20relation,%20counters,%20nickname,%20wall_comments,%20relatives,%20interests,%20movies,%20tv,%20books,%20games,%20about,%20connections*@
+@model VkClientViewModel
+
+@if (string.IsNullOrWhiteSpace(Model?.AccessToken))
+{
+    if (!string.IsNullOrWhiteSpace(Model?.ClientId))
+    {
+        <section class="form-section">
+            <div class="pd_5050">
+                <a href=@($@"https://oauth.vk.com/authorize?client_id={Model.ClientId}&display={Model.Display}&redirect_uri={Model.RedirectUri}&scope={Model.Scope}&response_type={Model.ResponseType}")
+                   class="btn btn-primary"
+                   target="_blank">
+                    Получить токен
+                </a>
+                <hr />
+                <form method="post" asp-controller="Options" asp-action="VkSetUserToken">
+                    <div class="input-group">
+                        <input asp-for="AccessToken" class="form-control" placeholder="Вставте сюда всю строку с токеном" autocomplete="off" />
+                        <span class="input-group-btn">
+                            <button id="btn-save-token"
+                                   type="submit"
+                                   data-loading-text="<i class='fa fa-spinner fa-spin'></i>"
+                                   class="btn btn-danger form-control">
+                                Сохранить
+                            </button>
+                        </span>
+                        <span asp-validation-for="AccessToken"></span>
+                    </div>
+                </form>
+            </div>
+        </section>
+    }
+}
+else
+{
+    <vc:vk-user-info></vc:vk-user-info>
+}

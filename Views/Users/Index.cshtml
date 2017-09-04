@@ -1,0 +1,31 @@
+﻿@model IEnumerable<UserViewModel>
+@{
+    ViewBag.Title = "Список пользователей";
+}
+<section>
+    <div class="container">
+        <a asp-action="Create">Добавить пользователя</a>
+
+        <table class="table">
+            <tr><th>Email</th><th>Дата<br />регистрации</th><th>Пороль<br />подтвержден</th><th></th></tr>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.RegesterDate</td>
+                    <td>@user.EmailConfirmed</td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@user.UserId" method="post">
+                            <a class="btn btn-sm btn-primary" asp-action="Edit" asp-route-id="@user.UserId">Изменить</a>
+                            <a class="btn btn-sm btn-primary" asp-controller="Roles" asp-action="Edit" asp-route-userid="@user.UserId">Права доступа</a>
+                            <a class="btn btn-sm btn-primary" asp-action="ChangePassword" asp-route-id="@user.UserId">Сменить пароль</a>
+                            <button type="submit" class="btn btn-sm btn-danger">
+                                Удалить
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</section>

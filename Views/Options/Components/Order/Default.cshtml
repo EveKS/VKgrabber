@@ -1,0 +1,62 @@
+﻿@using System.Globalization
+@model VkResponseAndGroupVk
+@{
+    var isPremium = Model?.Order?.DateEnd > DateTime.Now;
+}
+
+@if (Model != null)
+{
+    <div class="modal fade" id="modal-order" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title">@(isPremium ? "Продлить" : "Купить") премиум</h4>
+                    @if(isPremium)
+                    {
+                        <h4 class="modal-title fl_r">Дата окончания премиум: @(Model.Order.DateEnd.Value.ToString("d", new CultureInfo("ru-RU")))</h4>
+                    }
+                </div>
+                <div class="modal-body">
+                    <div>
+                        @if (!isPremium && Model.Order.IsNotOrdered)
+                        {
+                            <span class="help-block">
+                                В связи с неполной оплатой, необходимо доплатить @(Model.Order.Sum - Model.Order.LastOrdered) рублей
+                            </span>
+                        }
+
+                        <h1 class="fl_r"><i class="fa fa-money" aria-hidden="true"></i> 40 рублей</h1>
+                        <div>
+                            <iframe src="@("https://money.yandex.ru/quickpay/button-widget?targets=%D0%9F%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D0%B0%20%D0%BF%D1%80%D0%B5%D0%BC%D0%B8%D1%83%D0%BC&default-sum=40&button-text=11&yamoney-payment-type=on&button-size=m&button-color=orange&successURL=https%3A%2F%2Fvkgraber.ru%2FOptions&quickpay=small&account=41001446371750&label=" + Model.Order.OrderId + "&")"
+                                    width="184"
+                                    height="36"
+                                    frameborder="0"
+                                    allowtransparency="true"
+                                    scrolling="no"></iframe>
+                        </div>
+                        <div>
+                            <iframe src="@("https://money.yandex.ru/quickpay/button-widget?targets=%D0%9F%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D0%B0%20%D0%BF%D1%80%D0%B5%D0%BC%D0%B8%D1%83%D0%BC&default-sum=40&button-text=11&any-card-payment-type=on&button-size=m&button-color=orange&successURL=https%3A%2F%2Fvkgraber.ru%2FOptions&quickpay=small&account=41001446371750&label=" + Model.Order.OrderId + "&")"
+                                    width="184"
+                                    height="36"
+                                    frameborder="0"
+                                    allowtransparency="true"
+                                    scrolling="no"></iframe>
+                        </div>
+                        <div>
+                            <iframe src="@("https://money.yandex.ru/quickpay/button-widget?targets=%D0%9F%D0%BE%D0%BA%D1%83%D0%BF%D0%BA%D0%B0%20%D0%BF%D1%80%D0%B5%D0%BC%D0%B8%D1%83%D0%BC&default-sum=40&button-text=11&mobile-payment-type=on&button-size=m&button-color=orange&successURL=https%3A%2F%2Fvkgraber.ru%2FOptions&quickpay=small&account=41001446371750&label=" + Model.Order.OrderId + "&")"
+                                    width="184"
+                                    height="36"
+                                    frameborder="0"
+                                    allowtransparency="true"
+                                    scrolling="no"></iframe>
+                        </div>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

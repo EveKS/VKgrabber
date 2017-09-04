@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Бесплатный помощник администратору";
+}
+<div class="paralax-img-1" id="head">
+    <div class="col-md-8 col-sm-12 jumbotron caption head-caption text-center">
+        <h1 class="h1">Ваш личный помощник администратора группы <i class="fa fa-vk" aria-hidden="true"></i></h1>
+        @if (User.Identity.IsAuthenticated)
+        {
+            <a asp-controller="Options"
+               asp-action="Index"
+               class="btn btn-red btn-page">Перейти в личный кабинет</a>
+        }
+        else
+        {
+            <a asp-controller="Account"
+               asp-action="Register"
+               class="btn btn-red btn-page">Регистрация</a>
+        }
+    </div>
+</div>
+<div class="container text-container" id="about">
+    <div class="raw text-center">
+        <h2 class="h2">Как это работает?</h2>
+        <div class="col-md-4">
+            <h3 class="text-center h3">
+                Как начать.
+            </h3>
+            <p class="h4">
+                Создать и наполнять свои группы очень легко.<br />
+                Необходимо пройти регистрацию. В личном кабинете настройте свой ВК аккаунт. Добавить свою группу. Перейти в нее и указать группы источники.
+            </p>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center h3">
+                Группа.
+            </h3>
+            <div class="container-fluid">
+                <div class="img-prez">
+                    <img src="~/images/img_1.png"
+                         class="img-rounded img-responsive w100pr"
+                         alt="Группа" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3 class="text-center h3">
+                Источник.
+            </h3>
+            <div class="container-fluid">
+                <div class="img-prez">
+                    <img src="~/images/img_2.png"
+                         class="img-rounded img-responsive w100pr"
+                         alt="Источник" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="hidden">
+    <div class="paralax-img-2">
+        <div class="caption">
+            <span class="border">
+
+            </span>
+        </div>
+    </div>
+    <div class="text-block">
+        <div class="text-block-1">
+            <p>
+                Настройки для каждой группы.
+            </p>
+        </div>
+    </div>
+    <div class="paralax-img-3">
+        <div class="caption">
+            <span class="border">
+
+            </span>
+        </div>
+    </div>
+    <div class="text-block">
+        <div class="text-block-1">
+            <p>
+                Возможность указать несколько источников.
+            </p>
+        </div>
+    </div>
+</div>
+<div class="paralax-img-1" id="contacts">
+    <div class="footer-caption">
+        <form id="message-contakt" class="message-contakt">
+            <div class="row">
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label class="h4">Имя</label>
+                    <input name="name" type="text" class="form-control" placeholder="Введите имя" required>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                    <label class="h4">Email</label>
+                    <input name="email" type="email" class="form-control" placeholder="Введите email" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="h4 ">Сообщение</label>
+                <textarea name="message"
+                          class="form-control"
+                          placeholder="Введите ваше сообщение"
+                          required></textarea>
+            </div>
+            <button type="submit"
+                    data-loading-text="<i class='fa fa-spinner fa-spin '></i> Отправка"
+                    class="btn btn-danger btn-lg pull-right">
+                Отправить
+            </button>
+            <div id="message-submited" class="h3 text-center hidden">Сообщение отправлено!</div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,262 @@
+﻿@using System.Globalization
+@model VkResponseAndGroupVk
+@{
+    Func<double, DateTime> ConvertFromUnixTimestamp = timestamp =>
+    {
+        DateTime origin = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+        return origin.AddSeconds(timestamp);
+    };
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 message-container vkmessage-groupoution">
+            @if (string.IsNullOrWhiteSpace(Model?.IsInst))
+            {
+                <i class="btn fa fa-plus-square"
+                   aria-hidden="true"
+                   data-toggle="modal"
+                   data-target="#modal-add-groups"
+                   title="Список групп"></i>
+            }
+            <i class="btn fa fa-instagram rainbow"
+               aria-hidden="true"
+               data-toggle="modal"
+               data-target="#modal-instagram"
+               title="Инстаграм парсер"></i>
+            @if (Model?.VkGroupViewModel != null)
+            {
+                <a class="btn btn-vk-image"
+                   href=@($@"https://vk.com/{Model.VkGroupViewModel.Domain}")
+                   data-toggle="tooltip"
+                   title="@(Model?.VkGroupViewModel?.GroupName ?? "Перейти в группу")"
+                   target="_blank">
+                    <img src="@Model.VkGroupViewModel.Photo"
+                         class="img-circle img-responsive" />
+                </a>
+            }
+        </div>
+        <span hidden="hidden" class="vk-group-id">@Model?.VkGroupViewModel?.VkGroupId</span>
+        @if (string.IsNullOrWhiteSpace(Model?.IsInst))
+        {
+            <div class="form-group">
+                <a id="load-content"
+                   asp-controller="Options"
+                   asp-action="GetWall"
+                   asp-route-groupId="@Model?.VkGroupViewModel?.VkGroupId"
+                   asp-route-isLoad="true"
+                   data-loading-text="<i class='fa fa-spinner fa-spin '></i> Загрузка"
+                   class="btn btn-danger add-group w100pr">Загрузить посты</a>
+            </div>
+        }
+        @if (Model?.Responses != null)
+        {
+            @foreach (var item in Model.Responses)
+            {
+                <div class="message-form">
+                    <div class="col-md-12 message-container message-unhidden text-center" hidden="hidden">
+                        <span class="btn btn-link">Восстановить</span>
+                    </div>
+                    <div class="col-md-12 message-container message-hidden" @(item.Statuse == "Selected" ? Html.Raw(@"style=""background-color:rgba(200, 200, 200, 0.9);""") : Html.Raw(string.Empty))>
+                        <div class="w100pr">
+                            <div class="col-xs-4 col-sm-2 col-md-1">
+                                @{
+                                        var groupInfo = @item?.GroupInfo;
+                                }
+                                <img src="@(groupInfo?.Photo100 ?? groupInfo?.Photo200 ?? groupInfo?.Photo50)"
+                                     class="img-circle img-responsive img-group-logo" />
+                            </div>
+                            <div class="hidden-xs hidden-sm col-md-7">
+                                <p>@groupInfo?.ScreenName</p>
+                            </div>
+                            <div class="col-xs-8 col-sm-10 col-md-4 form-group text-right">
+                                <input type="checkbox" class="fancy-checkbox" name="fancy-checkbox-default" @(item.Statuse == "Selected" ? "checked=\"checked\" " : string.Empty) autocomplete="off" />
+                                <div class="btn-group text-center">
+                                    <label for="fancy-checkbox-default" class="btn btn-default">
+                                        <span class="fa fa-plus" aria-hidden="true"></span>
+                                        <span class="fa fa-minus" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-edit" title="Редактировать">
+                                        <span class="fa fa-pencil" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-deleate" title="Удалить">
+                                        <span class="fa fa-trash" aria-hidden="true"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="message-description">
+                            <pre>
+                                @item.Text
+                            </pre>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 message-text-options form-group text-right">
+                                <div class="btn-group text-center">
+                                    <label class="btn btn-default btn-tag" title="Удалить тэги">
+                                        <span class="fa fa-tag" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-flink" title="Удалить ссылки">
+                                        <span class="fa fa-link" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-user" title="Удалить автора">
+                                        <span class="fa fa-user" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-external-link" title="Удалить wiki ссылку">
+                                        <span class="fa fa-external-link" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-file-text" title="Удалить текст">
+                                        <span class="fa fa-file-text" aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default btn-level-up" title="Восстановить текст">
+                                        <span class="fa fa-level-up" aria-hidden="true"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <span hidden="hidden" class="wall-get-id">@item.ItemId</span>
+                        <div class="img-container-f">
+                            <div class="row">
+                                @if (string.IsNullOrWhiteSpace(item?.GifPrew?.FirstOrDefault()?.Gif))
+                                    {
+                                    @if (item?.Photo != null)
+                                        {
+                                            foreach (var photo in item.Photo)
+                                            {
+                                    <div class="col-sm-6 @(string.IsNullOrWhiteSpace(Model?.IsInst) ? "col-md-4 col-lg-3" : string.Empty)">
+                                        <div class="im-prev thumb">
+                                            <img src="@photo" class="thumb-img">
+                                        </div>
+                                    </div>
+                                            }
+                                        }
+                                    }
+                                    else if (item?.GifPrew != null)
+                                    {
+                                        foreach (var gif in item.GifPrew)
+                                        {
+                                            var isGif = gif?.DocExt?.ToLower() == "gif";
+                                            if (isGif)
+                                            {
+                                                var previou = gif.PreviewPhoto?.OrderByDescending(h => h.Height).FirstOrDefault()?.Src;
+                                                var gif_src = gif.Gif;
+                                                if (!string.IsNullOrWhiteSpace(previou) &&
+                                                    !string.IsNullOrWhiteSpace(gif_src))
+                                                {
+                                    <div class="col-sm-6 @(string.IsNullOrWhiteSpace(Model?.IsInst) ? "col-md-4 col-lg-3" : string.Empty)">
+                                        <div class="im-prev thumb">
+                                            <img src="@previou"
+                                                 data-gif="@gif_src"
+                                                 data-prev="@previou"
+                                                 class="gif-previous thumb-img" />
+                                        </div>
+                                    </div>
+                                                }
+                                            }
+                                        }
+                                    }
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>
+                                    <span class="message-date-hidden" hidden="hidden">@item.Date</span>
+                                    <span class="message-date">@ConvertFromUnixTimestamp(item.Date ?? 0).ToLocalTime().ToString("F", new CultureInfo("ru-RU"))</span>
+                                    <span class="fl_r">
+                                        <i class="fa fa-heart" aria-hidden="true"></i><span class="message-like"> @(item.Likes ?? 0)</span>
+                                        <text>|</text>
+                                        @if (string.IsNullOrWhiteSpace(Model?.IsInst))
+                                            {
+                                            <i class="fa fa-bullhorn" aria-hidden="true"></i><span class="message-share"> @(item.Reposts ?? 0)</span>
+                                            <text>|</text>
+                                            <i class="fa fa-eye" aria-hidden="true"></i><span class="message-view"> @(item.Views ?? 0)</span>
+                                            }
+                                            else
+                                            {
+                                            <i class="fa fa-comment-o" aria-hidden="true"></i><span class="message-comments"> @(item.Coments ?? 0)</span>
+                                            <span class="is-instagram"
+                                                  data-isinst="@(item?.ItemId ?? Model.IsInst)"
+                                                  hidden="hidden"></span>
+                                            }
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="form-group text-right">
+                            <input type="checkbox" class="fancy-checkbox" name="fancy-checkbox-default" @(item.Statuse == "Selected" ? "checked=\"checked\" " : "") autocomplete="off" />
+                            <div class="btn-group text-center">
+                                <label for="fancy-checkbox-default" class="btn btn-default">
+                                    <span class="fa fa-plus" aria-hidden="true"> </span>
+                                    <span class="fa fa-minus" aria-hidden="true"></span>
+                                </label>
+                                <label class="btn btn-default btn-edit">
+                                    <span class="fa fa-pencil" aria-hidden="true"></span>
+                                </label>
+                                <label class="btn btn-default btn-deleate">
+                                    <span class="fa fa-trash" aria-hidden="true"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <span id="send-selected"
+                        class="btn add-group w100pr btn-green">
+                    Отправить выделенное
+                </span>
+            </div>
+            }
+    </div>
+</div>
+
+<div class="modal fade" id="image-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <div class="modal-title">Просмотр изображения</div>
+            </div>
+            <div class="modal-body">
+                <img class="img-responsive center-block" src="" alt="">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-instagram" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Укажите ссылку</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Options" asp-action="GetWall">
+                    <input type="hidden" name="groupId" asp-for="VkGroupViewModel.VkGroupId" />
+                    <input type="hidden" name="isInst" value="true" />
+                    <div class="form-group">
+                        <input type="text"
+                               name="url"
+                               class="form-control"
+                               placeholder="Вставте сюда инстаграм ссылку" />
+                    </div>
+                    <div class="form-group form-btn-add">
+                        <button id="add-group-from"
+                                type="submit"
+                                data-loading-text="<i class='fa fa-spinner fa-spin'></i> Загрузка"
+                                class="btn btn-danger form-control">
+                            Загрузить
+                        </button>
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,39 @@
+﻿@{
+    var path = Context.Request.Path.Value.ToLower();
+    var isHomeIndex = path == "/" || path == "/home" ||
+        path == "/home/" || path == "/home/index" || path == "/home/index/";
+    var isOptionGetWall = path == "/options/getwall" || path == "/options/getwall/" ||
+        path == "/options/setgroup" || path == "/options/setgroup/";
+}
+<nav class="navbar navbar-inverse @(!isOptionGetWall ? "navbar-fixed-top " : "")navbar-menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand logo"><i class="fa fa-vk" aria-hidden="true"></i><span>graber</span></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (isHomeIndex)
+                {
+                    <li><a href="#head">Head</a></li>
+                    <li><a href="#about" title="Как это работает">Подробнее</a></li>
+                    <li><a href="#contacts" title="Написать разработчику">Контакты</a></li>
+                }
+                else if (User.IsInRole("admin"))
+                {
+                    <vc:admin-panel></vc:admin-panel>
+                }
+            </ul>
+            <vc:login-status></vc:login-status>
+        </div>
+    </div>
+</nav>
+
+<div class="up-arrow">
+    <i id="goToTop" class="btn fa fa-arrow-circle-o-up" aria-hidden="true"></i>
+</div>

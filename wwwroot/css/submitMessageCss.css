@@ -1,0 +1,20 @@
+﻿.message-contakt {
+    background: rgba(0, 0, 0, 0.65);
+    border-radius: 15px;
+    padding: 15px;
+}
+
+    .message-contakt .h4,
+    .message-contakt .h3 {
+        color: #fff;
+    }
+
+    .message-contakt input,
+    .message-contakt textarea {
+        border: 2px solid rgb(0, 0, 0);
+        color: #111;
+    }
+
+    .message-contakt textarea {
+        height: 100px;
+    }

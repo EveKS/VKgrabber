@@ -1,0 +1,150 @@
+﻿@using System.Globalization
+@model VkProfileViewModel
+
+<section class="form-section">
+    <div class="container">
+        <div class="form-group">
+            <div class="col-sm-4 form-img-section">
+                @if (!string.IsNullOrWhiteSpace(Model?.Photo))
+                {
+                    <div class="user-info">
+                        <div class="user-info-head">
+                            <div class="uih-premium">
+                                @if (Model.IsOrdered)
+                                {
+                                    <i class="fa fa-star"></i>
+                                }
+                            </div>
+                            <div class="uih-user-photo">
+                                <a href="@($@"https://vk.com/id{Model.UserVkId}")"
+                                   target="_blank">
+                                    <img src="@Model?.Photo" class="img-circle" />
+                                </a>
+                            </div>
+                        </div>
+                        <div class="user-info-content">
+                            <div class="text-center uic-info">
+                                <a href="@($@"https://vk.com/id{Model.UserVkId}")"
+                                   class="btn btn-link"
+                                   target="_blank">
+                                    <h4>@($"{Model?.FirstName} {Model?.LastName}")</h4>
+                                </a>
+                                <p>@Model.UserVkId</p>
+                            </div>
+                        </div>
+                        <div class="user-info-footer">
+                            <div class="uif-head">
+                                <div></div>
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="uih-footer text-center">
+                                @if (Model.IsOrdered)
+                                {
+                                    <h4>@Html.Raw($"Премиум до: {Model.Order.DateEnd.Value.ToString("d", new CultureInfo("ru-RU"))}")</h4>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="col-sm-8 form-bottom">
+                <label class="control-label">&nbsp;</label>
+                <span class="btn icon-btn btn-primary fl_r"
+                      data-toggle="modal"
+                      data-target="#modal-token-info">
+                    <i class="fa fa-key img-circle"
+                       aria-hidden="true">
+                    </i>
+                    Токен
+                </span>
+                <span class="btn icon-btn btn-primary fl_r"
+                      aria-hidden="true"
+                      data-toggle="modal"
+                      data-target="#modal-order">
+                    <i class="fa fa-star img-circle"
+                       aria-hidden="true">
+                    </i>
+                    Премиум
+                </span>
+                <div class="group-info-container pd_5050">
+                    <vc:vk-group-info vk-profile-view-model="@Model"></vc:vk-group-info>
+                </div>
+                <div class="form-group">
+                    <i aria-hidden="true"
+                    data-toggle="modal"
+                    @if (!Model.IsOrdered && Model.VkGroups != null && Model.VkGroups.Any(gr => gr != null))
+                    {
+                        @: data-target="#modal-order"
+                       }
+                    else
+                    {
+                        @: data-target="#modal-group-option"
+                       }
+                    class="btn btn-danger add-group w100pr">Добавть группу</i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="modal-token-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" if;</button>
+                <h4 class="modal-title">Информация о токене</h4>
+            </div>
+            <div class="modal-body">
+                <form asp-action="DeleteToken" method="post">
+                    <div class="input-group col-sm-12">
+                        <input asp-for="AccessToken" class="form-control" readonly />
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu btn-deleate-token">
+                                <li>
+                                    <button type="submit" class="btn btn-danger w100pr">
+                                        Удалить токен
+                                    </button>
+                                </li>
+                            </ul>
+                        </span>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-group-option" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Настройки</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Options" asp-action="SetGroup">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <input asp-for="Domain" class="form-control" placeholder="Вставте сюда адресс или id своей группы" />
+                        <span asp-validation-for="Domain"></span>
+                    </div>
+                    <div class="form-group form-btn-add">
+                        <button id="modal-group-option-submit"
+                                type="submit"
+                                data-loading-text="<i class='fa fa-spinner fa-spin '></i> Загрузка"
+                                class="btn btn-danger form-control">
+                            Добавить
+                        </button>
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

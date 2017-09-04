@@ -1,0 +1,26 @@
+﻿@model VkResponseAndGroupVk
+
+<div id="left-menu">
+    @if (string.IsNullOrWhiteSpace(Model?.IsInst))
+    {
+        <div class="tooltip-menu-get">
+            <a id="get-messages"
+               asp-controller="Options"
+               asp-action="GetWall"
+               asp-route-groupId="@Model?.VkGroupViewModel?.VkGroupId"
+               asp-route-isLoad="true"
+               data-loading-text="<i class='fa fa-spinner fa-spin '></i>"
+               title="Загрузить еще">
+                <i class="fa fa-cloud-download" aria-hidden="true"></i>
+            </a>
+        </div>
+    }
+    <div class="tooltip-menu-send">
+        <span id="send-messages" title="Отправить выделенное">
+            <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+        </span>
+    </div>
+    @*<div class="tooltip-menu-next">
+            <span id="next-messages" title="Следующая страница"><i class="fa fa-arrow-right" aria-hidden="true"></i></span>
+        </div>*@
+</div> 

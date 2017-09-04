@@ -1,0 +1,13 @@
+﻿@{
+    ViewData["Title"] = "Группа";
+}
+
+@model VkClient
+
+<div class="container option-container">
+    <div class="raw">
+        <vc:vk-user-options vk-client="@Model"></vc:vk-user-options>
+        <vc:vk-client-options vk-client="@Model"></vc:vk-client-options>
+    </div>
+</div>
+<vc:order></vc:order>

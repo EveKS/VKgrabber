@@ -1,0 +1,264 @@
+﻿@using Newtonsoft.Json;
+@model VkResponseAndGroupVk
+@{
+    var filter = Model?.Filter;
+}
+@*<iframe class="iframe-youtube" src="https://www.youtube.com/embed/ESXgJ9-H-2U" frameborder="0" allowfullscreen=""></iframe>*@
+<vc:vk-left-menu vk-response-and-group-vk="@Model"></vc:vk-left-menu>
+<vc:vk-message-head></vc:vk-message-head>
+@if (Model?.IsInst == "true" || Model?.IsInst == "next")
+{
+    <vc:vk-wall-view group-id="@Model.VkGroupViewModel?.VkGroupId"
+                     is-load="none"
+                     is-inst="@Model.IsInst"
+                     url="@Model.Url"></vc:vk-wall-view>
+}
+else
+{
+    <vc:vk-wall-view group-id="@Model?.VkGroupViewModel?.VkGroupId"
+                     is-load="@Model?.IsLoad"
+                     is-inst="none"
+                     url="none"></vc:vk-wall-view>
+}
+
+<div class="modal fade" id="modal-add-groups" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Список групп</h4>
+            </div>
+            <div class="modal-body">
+                @if (!string.IsNullOrWhiteSpace(Model?.VkGroupViewModel?.GroupId))
+                {
+                    @if (Model.VkGroupViewModel?.VkGroupsFrom == null || !Model.VkGroupViewModel.VkGroupsFrom.Any())
+                    {
+                        <form method="post" asp-controller="Options" asp-action="SetGroupFrom">
+                            <div asp-validation-summary="ModelOnly"></div>
+                            @if (!string.IsNullOrWhiteSpace(Model?.VkGroupViewModel.VkGroupId))
+                            {
+                                <input type="hidden" asp-for="VkGroupViewModel.VkGroupId" />
+                            }
+                            <div class="form-group">
+                                <textarea asp-for="VkGroupViewModel.AddedGroup"
+                                          class="form-control"
+                                          rows="5"
+                                          placeholder="Встувте сюда id или адреса групп, из которых вы планируете копировать посты"></textarea>
+                                <span asp-validation-for="VkGroupViewModel.AddedGroup"></span>
+                            </div>
+                            <div class="form-group form-btn-add">
+                                <input type="submit" value="Добавить" class="btn btn-danger form-control" />
+                            </div>
+                        </form>
+                    }
+                    else
+                    {
+                        <div class="w100pr">
+                            <div class="col-sm-12 form-group text-right">
+                                <div class="btn-group text-center">
+                                    <label class="btn btn-default filter-btn-from"
+                                           data-options=@Html.Raw(Json.Serialize(new { at = Model?.AttributeAll ?? string.Empty, gr = Model?.VkGroupViewModel?.VkGroupId ?? string.Empty, all = "all", rf1 = filter?.RepalaceFrom1 ?? string.Empty, rt1 = filter?.RepalaceTo1 ?? string.Empty, rf2 = filter?.RepalaceFrom2 ?? string.Empty, rt2 = filter?.RepalaceTo2 ?? string.Empty, gwl = filter?.GetWithLink, gwp = filter?.GetWithPicture , gwvl = filter?.GetWithWikiPage, rtxt = filter?.RemoveText, rt = filter?.RemoveTag, ggp = filter?.GetOnlyGroupPost, ra = filter?.RemoveAuthor, cwa = filter?.CopyWithAuthor, rs = filter?.RemoveSmile }).ToString().Replace(" ", "&nbsp;"))
+                                           data-idfrom="@Model?.VkGroupViewModel?.VkGroupId"
+                                           aria-hidden="true"
+                                           title="Фильтры">
+                                        <span class="fa fa-cog"
+                                              aria-hidden="true"></span>
+                                    </label>
+                                    <label class="btn btn-default deleate-btn-from" data-idfrom="all" data-group="@Model?.VkGroupViewModel?.VkGroupId" title="Удалить">
+                                        <span class="fa fa-trash" aria-hidden="true"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            @{
+                                var items = Model?.VkGroupViewModel?.VkGroupsFrom;
+                                if (items != null)
+                                {
+                                    if (Model?.Order?.DateEnd <= DateTime.Now)
+                                    {
+                                        items = items.Take(10).ToList();
+                                    }
+                                    foreach (var item in Model?.VkGroupViewModel?.VkGroupsFrom)
+                                    {
+                                        <div class="w100pr gf-options">
+                                            <div class="col-xs-3 col-sm-2 col-md-2">
+                                                <img src="@(item?.GroupInfo?.Photo100 ?? item?.GroupInfo?.Photo200 ?? item?.GroupInfo?.Photo50)"
+                                                     class="img-circle img-responsive img-group-logo" />
+                                            </div>
+                                            <div class="col-xs-3 col-sm-5 col-md-5">
+                                                <a href="@($"https://vk.com/{item?.GroupInfo?.ScreenName}")"
+                                                   data-toggle="tooltip"
+                                                   title="@Html.Raw(item?.GroupInfo?.Name ?? item?.GroupInfo?.ScreenName)"
+                                                   target="_blank">@(item?.GroupInfo?.ScreenName ?? item?.Domain ?? item?.GroupInfo?.Id.ToString())</a>
+                                            </div>
+                                            <div class="col-xs-6 col-sm-5 col-md-5 form-group text-right">
+                                                <div class="btn-group text-center">
+                                                    <label class="btn btn-default filter-btn-from"
+                                                           data-options=@Html.Raw(Json.Serialize(new { at = item.Atribute ?? string.Empty, gr = item.VkGroupFromId ?? string.Empty, all = "none", rf1 = item.Filter?.RepalaceFrom1 ?? string.Empty, rt1 = item.Filter?.RepalaceTo1 ?? string.Empty, rf2 = item.Filter?.RepalaceFrom2 ?? string.Empty, rt2 = item.Filter?.RepalaceTo2 ?? string.Empty, gwl = item.Filter?.GetWithLink, gwp = item.Filter?.GetWithPicture , gwvl = item.Filter?.GetWithWikiPage, rtxt = item.Filter?.RemoveText, rt = item.Filter?.RemoveTag, ggp = item.Filter?.GetOnlyGroupPost, ra = item.Filter?.RemoveAuthor, cwa = item.Filter?.CopyWithAuthor, rs = item.Filter?.RemoveSmile }).ToString().Replace(" ", "&nbsp;"))
+                                                           data-idfrom="@item.VkGroupFromId"
+                                                           aria-hidden="true"
+                                                           title="Фильтры">
+                                                        <span class="fa fa-cog"
+                                                              aria-hidden="true"></span>
+                                                    </label>
+                                                    <label class="btn btn-default deleate-btn-from"
+                                                           data-idfrom="@item.VkGroupFromId"
+                                                           title="Удалить">
+                                                        <span class="fa fa-trash" aria-hidden="true"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+
+                                }
+                            }
+                            <div class="form-group w100pr">
+                                <button type="button"
+                                        data-dismiss="modal"
+                                        aria-hidden="true"
+                                        data-toggle="modal"
+                                        data-target="#modal-add-new-groups"
+                                        class="btn btn-danger form-control">
+                                    Добавить
+                                </button>
+                            </div>
+                        </div>
+                                }
+                                }
+                                else
+                                {
+                                    <div class="form-group">
+                                        <span>Вначале укажите свою группу</span>
+                                    </div>
+                                }
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-add-new-groups" tabindex="-1" role="dialog" aria-labelledby="modalLabel2" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Добавить группы</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Options" asp-action="SetGroupFrom">
+                    <input type="hidden" asp-for="VkGroupViewModel.VkGroupId" />
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="form-group">
+                        <textarea asp-for="VkGroupViewModel.AddedGroup"
+                                  class="form-control"
+                                  rows="5"
+                                  placeholder="Встувте сюда id или адреса групп, из которых вы планируете копировать посты"></textarea>
+                        <span asp-validation-for="VkGroupViewModel.AddedGroup"></span>
+                    </div>
+                    <div class="form-group form-btn-add">
+                        <button id="add-group-from"
+                                type="submit"
+                                data-loading-text="<i class='fa fa-spinner fa-spin'></i> Загрузка"
+                                class="btn btn-danger form-control">
+                            Добавить
+                        </button>
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="modal-option-new-groups" tabindex="-1" role="dialog" aria-labelledby="modalLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Настройки</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Options" asp-action="AddTag">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" class="group-id-tag" name="group_id" />
+                    <input type="hidden" class="group-id-all" name="all" />
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a data-toggle="tab" href="#add_tag">Добавить хэштэги</a></li>
+                        <li><a data-toggle="tab" href="#replace">Замена строк</a></li>
+                        <li><a data-toggle="tab" href="#filters">Фильтры</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="add_tag" class="tab-pane fade in active">
+                            <div class="form-group">
+                                <textarea name="tags"
+                                          class="form-control"
+                                          rows="5"
+                                          placeholder="Впешите сюда тэги, которые будут вствлены в текст"></textarea>
+                                <span asp-validation-for="VkGroupViewModel.AddedGroup"></span>
+                            </div>
+                        </div>
+                        <div id="replace" class="tab-pane fade">
+                            <div class="form-group">
+                                <input name="RepalaceFrom1" type="text" class="form-control" placeholder="с" />
+                                <input name="RepalaceTo1" type="text" class="form-control" placeholder="на" />
+                            </div>
+                            <div class="form-group">
+                                <input name="RepalaceFrom2" type="text" class="form-control" placeholder="с" />
+                                <input name="RepalaceTo2" type="text" class="form-control" placeholder="на" />
+                            </div>
+                        </div>
+                        <div id="filters" class="tab-pane fade">
+                            <span class="help-block">
+                                * Помечены, пока, не работающие функции.
+                            </span>
+                            <div class="checkbox">
+                                <label><input name="GetWithLink" type="checkbox" value="true">Не копировать посты со ссылкой</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="GetWithPicture" type="checkbox" value="true">Не копировать пасты без картинки(gif включительно)</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="GetWithVkLink" type="checkbox" value="true">Не копировать посты с ВК ссылками</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="GetWithWikiPage" type="checkbox" value="true">Не копировать посты с wiki страницами</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="RemoveText" type="checkbox" value="true">Удалять весь текст</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="RemoveTag" type="checkbox" value="true">Удалять хэштеги</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="RemoveSmile" type="checkbox" value="true">* Удалять смайлы</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input name="GetOnlyGroupPost" type="checkbox" value="true">Копировать посты только от мени группы</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="RemoveAuthor" value="true">Удалять автора поста</label>
+                            </div>
+                            <div class="checkbox">
+                                <label><input type="checkbox" name="CopyWithAuthor" value="true">Не копировать посты с подписью (там где указан автор)</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-btn-add">
+                        <input type="submit" value="Сохранить" class="btn btn-danger form-control" />
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="selected-number">
+    <span id="selected-count"></span>
+</div>

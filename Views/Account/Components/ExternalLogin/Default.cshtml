@@ -1,0 +1,39 @@
+﻿@using System.Collections.Generic
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@inject SignInManager<User> SignInManager
+
+<div class="col-md-4">
+    <section>
+        @{
+            var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
+            if (loginProviders.Count > 0)
+            {
+                <h4>Использовать другой сервис, для авторизации.</h4>
+                <hr />
+
+                <form asp-controller="Account" asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                    <div>
+                        <p>
+                            @{
+                                foreach (var provider in loginProviders)
+                                {
+                                    var btnclass = provider.AuthenticationScheme == "ВКонтакте" ? "vk" : provider.AuthenticationScheme.ToLower();
+                                    var faclass = $"fa fa-{btnclass.Replace("microsoft", "windows")}";
+
+                                    <button type="submit"
+                                            class="@Html.Raw($"btn btn-block btn-social btn-{btnclass}")"
+                                            name="provider"
+                                            value="@provider.AuthenticationScheme"
+                                            title="Войти, используя ваш @provider.DisplayName аккаунт">
+                                        <span class='@faclass'></span>Войти, используя @provider.DisplayName
+                                    </button>
+                                }
+                            }
+                        </p>
+                    </div>
+                </form>
+                                }
+        }
+    </section>
+</div>

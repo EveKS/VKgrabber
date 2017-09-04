@@ -1,0 +1,140 @@
+﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+
+    <meta name="keywords" content="vkgraber, vk, graber, grabing, manager, парсер, вк, менеджер, грабер, грабинг,
+          post, соцсеть, бесплатно, группы, групп, бесплатный, онлайн, сайты,
+          парсеры, постов, сообщества, сообществ, помощник, администратора, cоздать, наполнять, источники, источник,
+          настройки, для, каждой, как, указать, свою, ваш, войти, возможность, группа,
+          добавить, зарегистрироваться, забыли, закрыть, запомнить, или, имя, использовать, контакты, личный,
+          начать, необходимо, отправить, перейти, подробнее, работает, регистрация, создать, сообщение, это,
+          авторизации, аккаунт, группу, другой, источников, кабинете, легко, личном, настройте, нее,
+          несколько, отправлено, очень, пароль, пройти, регистрацию, свой, способ, vkmanager">
+    <meta name="description" content="Подбор контента для вашей группы ВКонтакте из нескольких источников.
+          Как это работает? Создать и наполнять свои группы очень легко. Необходимо пройти регистрацию. В
+          личном кабинете настройте свой ВК аккаунт. Добавить свою группу. Перейти в нее и указать группы источники.">
+    <meta name="author" content="EveKS">
+
+    <meta name="yandex-verification" content="de21d60fdfbf6077" />
+    <meta name="google-site-verification" content="M-WbwrY_nKxUaJ81NE2lsOgbCM_9fH03HnlaX8f7toc" />
+    <meta name='wmail-verification' content='10aa154dfa5e8186218f368dbcbebfcd' />
+
+    <title>VkGraber: @ViewData["Title"]</title>
+
+    <environment names="Development">
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/media.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/wallCss.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/messageNavBar.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/fonts.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/optionView.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/error.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/submitMessageCss.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/yandexCss.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/bootstrap-social.css" asp-append-version="true" />
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    @Html.Raw(JavaScriptSnippet.FullScript)
+    <script type='application/ld+json'>
+        {
+        "@@context": "http://www.schema.org",
+        "@@type": "Organization",
+        "name": "VkManager",
+        "url": "https://vkgraber.ru/",
+        "image": "https://vkgraber.ru/vk_pr.jpg",
+        "description": "Подбор контента для вашей группы ВКонтакте из нескольких источников."
+        }
+    </script>
+    <!-- Google Analytics -->
+    <script async src='//www.google-analytics.com/analytics.js'></script>
+    <script>
+        window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) }; ga.l = +new Date;
+        ga('create', 'UA-103572116-2', { 'cookieExpires': 86400 });
+        ga('send', 'pageview');
+    </script>
+    <!-- End Google Analytics -->
+    <!-- Rating@Mail.ru counter -->
+    <script type="text/javascript">
+        var _tmr = window._tmr || (window._tmr = []);
+        _tmr.push({id: "2920168", type: "pageView", start: (new Date()).getTime()});
+        (function (d, w, id) {
+          if (d.getElementById(id)) return;
+          var ts = d.createElement("script"); ts.type = "text/javascript"; ts.async = true; ts.id = id;
+          ts.src = (d.location.protocol == "https:" ? "https:" : "http:") + "//top-fwz1.mail.ru/js/code.js";
+          var f = function () {var s = d.getElementsByTagName("script")[0]; s.parentNode.insertBefore(ts, s);};
+          if (w.opera == "[object Opera]") { d.addEventListener("DOMContentLoaded", f, false); } else { f(); }
+        })(document, window, "topmailru-code");
+    </script>
+    <noscript>
+        <div>
+            <img src="//top-fwz1.mail.ru/counter?id=2920168;js=na"
+                 style="border:0;position:absolute;left:-9999px;" alt="" />
+        </div>
+    </noscript>
+    <!-- //Rating@Mail.ru counter -->
+</head>
+@{
+    var path = Context.Request.Path.Value.ToLower();
+    var isHomeIndex = path == "/" || path == "/home" ||
+    path == "/home/" || path == "/home/index" || path == "/home/index/";
+    var isOptionGetWall = path == "/options/getwall" || path == "/options/getwall/" ||
+path == "/options/setgroup" || path == "/options/setgroup/";
+    var isError = path.Contains("error");
+    var isLogin = path.Contains("login") || path.Contains("externallogin")
+        || path.Contains("externallogincallback") || path.Contains("resetpassword")
+        || path.Contains("externalloginconfirmation") || path.Contains("register");
+}
+<body data-spy="scroll" data-target=".navbar" data-offset="60" @(!isOptionGetWall ? Html.Raw("class=\"pdbody\"") : Html.Raw(string.Empty))>
+    <vc:navbar></vc:navbar>
+    @(!isHomeIndex ? Html.Raw("<div class=\"big-container\">") : Html.Raw(string.Empty))
+    @RenderBody()
+    @(!isHomeIndex ? Html.Raw("</div>") : Html.Raw(string.Empty))
+    @if (!isError)
+    {
+        <vc:footer></vc:footer>
+    }
+
+    @if (!isLogin && !User.Identity.IsAuthenticated)
+    {
+        <vc:account-login-modal></vc:account-login-modal>
+    }
+
+    <environment names="Development">
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/wallJS.js" asp-append-version="true"></script>
+        <script src="~/js/optionVkJs.js" asp-append-version="true"></script>
+        <script src="~/js/submitMessageJs.js" asp-append-version="true"></script>
+        <script src="https://use.fontawesome.com/2aaeaf43f5.js" asp-append-version="true"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery"
+                crossorigin="anonymous"
+                integrity="sha384-K+ctZQ+LL8q6tP7I94W+qzQsfRV2a+AfHIi9k8z8l9ggpc8X+Ytst4yBo/hH+8Fk">
+        </script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+                crossorigin="anonymous"
+                integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
+        </script>
+        <script async src="~/js/site.min.js" asp-append-version="true"></script>
+        <script async src="https://use.fontawesome.com/2aaeaf43f5.js"
+                asp-fallback-src="~/lib/fontawesome/fontawesome.js"></script>
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

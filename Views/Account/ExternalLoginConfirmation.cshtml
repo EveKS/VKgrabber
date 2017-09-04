@@ -1,0 +1,41 @@
+﻿@model ExternalLoginConfirmationViewModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+<section>
+    <div class="container body-content">
+        <div class="row">
+            <h2>@ViewData["Title"].</h2>
+            <h3>Свяжите свою учетную запись @ViewData["LoginProvider"].</h3>
+
+            <form asp-controller="Account" asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal">
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <p class="text-info">
+                    Вы успешно прошли аутентификацию с помощью <strong>@ViewData["LoginProvider"]</strong>.
+                    Пожалуйста, введите адрес электронной почты для этого сайта ниже и нажмите кнопку «Регистрация», чтобы закончить
+                    вход в систему.
+                </p>
+                <div class="form-group">
+                    <label asp-for="Email" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Регистрация</button>
+                    </div>
+                </div>
+                <p class="text-danger">
+                    * Вам будет отправлено письмо на email, для подтверждения.
+                </p>
+            </form>
+
+            @section Scripts {
+                @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+            }
+            </div></div></section>

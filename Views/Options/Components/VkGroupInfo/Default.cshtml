@@ -1,0 +1,128 @@
+﻿@model VkProfileViewModel
+
+@if (Model?.VkGroups != null)
+{
+    foreach (var group in Model.VkGroups)
+    {
+        if (group != null)
+        {
+            <div class="col-sm-6 group-info-body">
+                <div class="gi-content">
+                    <div class="gic-info">
+                        <a asp-action="GetWall"
+                           asp-controller="Options"
+                           asp-route-groupId="@group.VkGroupId"
+                           class="btn bnt-get-wall">
+                            <img src="@(group.GroupInfo?.Photo100 ?? group.GroupInfo?.Photo200 ?? group.GroupInfo?.Photo50)" class="img-circle" title="@group.GroupInfo.Name" />
+                        </a>
+                        <div class="gic-btn"
+                             data-group="@group?.VkGroupId">
+                            <i class="btn fa fa-trash"
+                               aria-hidden="true"></i>
+                            <i class="btn fa fa-cogs"
+                               data-group="@group.VkGroupId"
+                               data-timef="@group.TimeFrom"
+                               data-timet="@group.TimeTo"
+                               data-maxfrom="@group.MaxFrom"
+                               data-maxload="@group.MaxLoad"
+                               aria-hidden="true"></i>
+                        </div>
+
+                    </div>
+                    <div class="gic-name">
+                    </div>
+                    <h4>@group.GroupInfo.ScreenName</h4>
+                </div>
+            </div>
+        }
+    }
+}
+
+<div class="modal fade" id="modal-vkgroups" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Настройки группы</h4>
+            </div>
+            <div class="modal-body">
+                <form method="post" asp-controller="Options" asp-action="GroupSetup">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <input type="hidden" name="group_id" />
+                    <div class="tab-pane fade in active">
+                        <span class="help-block">
+                            Время между постами:
+                        </span>
+                        <div class="input-group">
+                            <span class="input-group-addon">От:</span>
+                            <select name="select_from" class="text-value form-control">
+                                <option value="15">15</option>
+                                <option value="30" selected>30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                                <option value="90">90</option>
+                                <option value="150">150</option>
+                                <option value="300">300</option>
+                            </select>
+                            <span class="input-group-addon">до:</span>
+                            <select name="select_to" class="text-value form-control">
+                                <option value="15">15</option>
+                                <option value="30" selected>30</option>
+                                <option value="45">45</option>
+                                <option value="60">60</option>
+                                <option value="90">90</option>
+                                <option value="150">150</option>
+                                <option value="300">300</option>
+                            </select>
+                            <span class="input-group-addon hidden-xs">минут</span>
+                        </div>
+                        <span class="help-block">
+                            Будет выбрано случайное время, в выбронном промежутке времени.
+                        </span>
+                        <hr />                        
+                    </div>
+                    <div class="block-maxvalue">
+                        <div class="value-block">
+                            <div class="col-xs-12 col-sm-8">
+                                Количество постов из источника до:
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="input-group number-spinner">
+                                    <span class="input-group-btn data-dwn">
+                                        <span class="btn btn-default btn-info" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></span>
+                                    </span>
+                                    <input type="text" name="max_from" class="text-value form-control text-center" value="30" min="10" max="50">
+                                    <span class="input-group-btn data-up">
+                                        <span class="btn btn-default btn-info" data-dir="up"><span class="glyphicon glyphicon-plus"></span></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="value-block">
+                            <div class="col-xs-12 col-sm-8">
+                                Количество загружаемых постов до:
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="input-group number-spinner">
+                                    <span class="input-group-btn data-dwn">
+                                        <span class="btn btn-default btn-info" data-dir="dwn"><span class="glyphicon glyphicon-minus"></span></span>
+                                    </span>
+                                    <input type="text" name="max_load" class="text-value form-control text-center" value="50" min="10" max="100">
+                                    <span class="input-group-btn data-up">
+                                        <span class="btn btn-default btn-info" data-dir="up"><span class="glyphicon glyphicon-plus"></span></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group form-btn-add">
+                        <input type="submit" value="Сохранить" class="btn btn-danger form-control" />
+                    </div>
+                </form>
+                <div>
+                    <button type="button" class="btn btn-default w100pr" data-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

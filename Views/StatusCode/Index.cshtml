@@ -1,0 +1,47 @@
+﻿@model int
+
+@{
+    var statusCode = Model;
+    var statusmessage = "";
+    switch (statusCode)
+    {
+        case 400:
+            statusmessage = "Неверный запрос: запрос не может быть выполнен из-за неверного синтаксиса";
+            break;
+
+        case 403:
+            statusmessage = "Запрещено";
+            break;
+
+        case 404:
+            statusmessage = "Страница не найдена";
+            break;
+
+        case 408:
+            statusmessage = "Истекло время ожидания";
+            break;
+
+        case 500:
+            statusmessage = "Внутренняя ошибка сервера";
+            break;
+
+        default:
+            statusmessage = "Это странно ... Что-то, пошло не так";
+            break;
+    }
+}
+
+<div class="error-container">
+    <div class="middle-error text-center">
+        <div class="error-view img-circle">
+            <a class="fa fa-home"
+               aria-hidden="true"
+               asp-controller="Home"
+               asp-action="Index"></a>
+            <span>Error.</span>
+        </div>
+
+        <h1 class="text-danger">@Model</h1>
+        <h3>@statusmessage</h3>
+    </div>
+</div>
